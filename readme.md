@@ -98,7 +98,22 @@ exports.handler = async (event, context) => {
 }
 ```
 
-6. Now you can use the command `purgedns <distributionId> <awsProfile>` from any location in your terminal, where you pass the distribution id, which can be found in the CloudFront Service Distribution Console, and the name of the AWS profile you defined in the `config` file in step 2. For example `purgedns ENWCCB4BH8NK6 my_profile`.
+6. Before your Lambda function can complete successfully you have to grant it permission to CloudFront services. You do this by going to the `IAM` `Role` that was created for your Lambda function (you can find the name of it in the 'General Configuration' tab of the 'Configuration' pane of your Lambda function) and adding the folling object to the json permission declaration:
+
+```
+,
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudfront:*"
+            ],
+            "Resource": [
+                "arn:aws:cloudfront::<Enter Your AWS ID Here>:distribution/*"
+            ]
+        }
+```
+
+7. Now you can use the command `purgedns <distributionId> <awsProfile>` from any location in your terminal, where you pass the distribution id, which can be found in the CloudFront Service Distribution Console, and the name of the AWS profile you defined in the `config` file in step 2. For example `purgedns ENWCCB4BH8NK6 my_profile`.
 
 ## To do's
 
